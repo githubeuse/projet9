@@ -44,7 +44,7 @@ export default (bill) => {
       </div>
       <div class="row">
         <div class="col-sm">
-          <label for="amount" class="bold-label">Montant TTC </label>
+          <label for="amount" class="bold-label">Montant TTC *</label>
           <div class='input-field input-flex'>
             <span data-testid="amount-d">${bill.amount}</span>
             <span> ${euroIcon} </span>
