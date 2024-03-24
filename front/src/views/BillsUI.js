@@ -47,6 +47,8 @@ export default ({ data: bills, loading, error }) => {
   } else if (error) {
     return ErrorPage(error)
   }
+ 
+  bills.sort((a, b) => ((a.date < b.date) ? 1 : -1));
   
   return (`
     <div class='layout'>
