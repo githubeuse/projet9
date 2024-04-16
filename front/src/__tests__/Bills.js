@@ -41,6 +41,34 @@ describe("Given I am connected as an employee", () => {
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
     })
+    describe("When I click on the new note de frais button", () => {
+      test('Then handleClickNewBill calls onNavigate with correct path', () => {
+        Object.defineProperty(window, "localStorage", {
+          value: localStorageMock,
+        });
+        window.localStorage.setItem('user', JSON.stringify({
+          type: 'Employee'
+        }))
+        const root = document.createElement("div");
+        root.setAttribute("id", "root");
+        document.body.append(root);
+        router();
 
+        const onNavigate = (pathname) => {
+          document.body.innerHTML = ROUTES({ pathname });
+        };
+
+        window.onNavigate(ROUTES_PATH.Bills);
+
+        const btnNewBill = screen.getByTestId("btn-new-bill");
+        const bill = new Bills({ document, onNavigate, store: null, localStorage });
+
+        const handleClickNewBill = jest.fn(bill.handleClickNewBill);
+        btnNewBill.addEventListener("click", handleClickNewBill);
+
+        userEvent.click(btnNewBill);
+        expect(handleClickNewBill).toBeCalled();
+      });
+    })
   })
 })
