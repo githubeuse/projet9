@@ -1,3 +1,5 @@
+// CONTAINERS - DASHBOARD.JS
+
 import { formatDate } from '../app/format.js'
 import DashboardFormUI from '../views/DashboardFormUI.js'
 import BigBilledIcon from '../assets/svg/big_billed.js'
@@ -131,7 +133,7 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
-
+    console.log(bills);
     bills.forEach(b => {
       $(`#open-bill${b.id}`).off('click');
     })
@@ -151,6 +153,7 @@ export default class {
     }
 
     bills.forEach(bill => {
+      // console.log(bills);
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
 
       // const billElement = $(`#open-bill${bill.id}`);
