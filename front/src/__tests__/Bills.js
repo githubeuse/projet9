@@ -70,5 +70,34 @@ describe("Given I am connected as an employee", () => {
         expect(handleClickNewBill).toBeCalled();
       });
     })
-  })
-})
+    describe("When i click on the eye icon", () => {
+      test('Then handleClickIconEye is called, updates the modal content and shows the modal', () => {
+        Object.defineProperty(window, "localStorage", {
+          value: localStorageMock,
+        });
+        window.localStorage.setItem('user', JSON.stringify({
+          type: 'Employee'
+        }))
+        const root = document.createElement("div"); 
+        root.setAttribute("id", "root");
+        document.body.append(root);
+        router();
+
+        window.onNavigate(ROUTES_PATH.Bills);
+
+        document.body.innerHTML = BillsUI({ data: bills });
+        const bill = new Bills({ document, onNavigate, store: null, localStorage });
+        waitFor(() => screen.getAllByTestId("icon-eye"));
+
+        const spy = jest.spyOn(bill, "handleClickIconEye");
+        const iconEye = screen.getAllByTestId("icon-eye")[0];
+        $.fn.modal = jest.fn();
+        userEvent.click(iconEye);
+
+        expect(spy).toBeCalledTimes(1);
+        expect($.fn.modal).toBeCalledWith("show");
+
+      });
+    });
+  });
+});
