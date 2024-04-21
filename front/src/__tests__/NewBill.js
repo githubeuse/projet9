@@ -74,6 +74,44 @@ describe("Given I am connected as an employee", () => {
           expect(input.files[0].name).toBe("image.png");
         });
       });
+      describe("When I click on the choisir un fichier button and upload a wrong type file", () => {
+        test("Then, it should alert and reset input value if file type is invalid", () => {
+          //mock de window.alert
+          window.alert = jest.fn();
   
+          const html = NewBillUI();
+          document.body.innerHTML = html;
+          const onNavigate = (pathname) => {
+            document.body.innerHTML = ROUTES({ pathname });
+          };
+  
+          // initialisation NewBill
+          const newBill = new NewBill({
+            document,
+            onNavigate,
+            store,
+            localStorage: window.localStorage,
+          });
+  
+          const handleChangeFile = jest.fn((e) => newBill.handleChangeFile(e));
+          const input = screen.getByTestId("file");
+          input.addEventListener("change", handleChangeFile);
+  
+          //fichier au mauvais format
+          fireEvent.change(input, {
+            target: {
+              files: [
+                new File(["image.gif"], "image.gif", {
+                  type: "image/gif", // Type non valide
+                }),
+              ],
+            },
+          });
+          expect(window.alert).toHaveBeenCalledWith(
+            "Le type de fichier est invalide. Merci de choisir le format JPG, JPEG ou PNG"
+          );
+          expect(input.value).toBe("");
+        });
+      });  
     })
   })
