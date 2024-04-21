@@ -1,18 +1,22 @@
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
-
+//CONTAINER NEWBILL
 export default class NewBill {
   constructor({ document, onNavigate, store, localStorage }) {
     this.document = document
     this.onNavigate = onNavigate
     this.store = store
-    const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
-    formNewBill.addEventListener("submit", this.handleSubmit)
-    const file = this.document.querySelector(`input[data-testid="file"]`)
-    file.addEventListener("change", this.handleChangeFile)
-    this.fileUrl = null
+
+    const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`) // formulaire nouvelle note de frais
+    formNewBill.addEventListener("submit", this.handleSubmit) //écoute du submit du formulaire
+
+    const file = this.document.querySelector(`input[data-testid="file"]`) // fichier à soumettre
+    file.addEventListener("change", this.handleChangeFile) // écoute lors du change du fichier
+
+    this.fileUrl = null 
     this.fileName = null
     this.billId = null
+
     new Logout({ document, localStorage, onNavigate })
   }
   handleChangeFile = e => {

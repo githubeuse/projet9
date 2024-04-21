@@ -96,7 +96,6 @@ describe("Given I am connected as an employee", () => {
 
         expect(spy).toBeCalledTimes(1);
         expect($.fn.modal).toBeCalledWith("show");
-
       });
     });
   });

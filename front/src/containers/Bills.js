@@ -11,6 +11,7 @@ export default class {
     this.document = document
     this.onNavigate = onNavigate
     this.store = store  
+    
     const buttonNewBill = document.querySelector(`button[data-testid="btn-new-bill"]`)
     if (buttonNewBill) buttonNewBill.addEventListener('click', this.handleClickNewBill)
     
