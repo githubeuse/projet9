@@ -26,7 +26,8 @@ describe("Given I am connected as an employee", () => {
       const root = document.createElement("div")
       root.setAttribute("id", "root")
       document.body.append(root)
-      router()
+      router();
+
       window.onNavigate(ROUTES_PATH.Bills)
       await waitFor(() => screen.getByTestId('icon-window'))
       const windowIcon = screen.getByTestId('icon-window')
@@ -61,13 +62,25 @@ describe("Given I am connected as an employee", () => {
         window.onNavigate(ROUTES_PATH.Bills);
 
         const btnNewBill = screen.getByTestId("btn-new-bill");
+        // console.log(btnNewBill.outerHTML);
+
+        // try {
+        //   userEvent.click(btnNewBill);
+        //   console.log('Le bouton est cliquable');
+        // } catch (error) {
+        //   console.log('Le bouton n\'est pas cliquable', error);
+        // }
+
         const bill = new Bills({ document, onNavigate, store: null, localStorage });
 
-        const handleClickNewBill = jest.fn(bill.handleClickNewBill);
-        btnNewBill.addEventListener("click", handleClickNewBill);
+        // console.log(bill.handleClickNewBill); // Ajoutez cette ligne
 
-        userEvent.click(btnNewBill);
-        expect(handleClickNewBill).toBeCalled();
+
+        bill.handleClickNewBill = jest.fn(bill.handleClickNewBill);
+        btnNewBill.addEventListener("click", bill.handleClickNewBill);
+
+        btnNewBill.click(btnNewBill);
+        expect(bill.handleClickNewBill).toBeCalled();
       });
     })
     describe("When i click on the eye icon", () => {
