@@ -104,8 +104,11 @@ describe("Given I am connected as an employee", () => {
 
         const spy = jest.spyOn(bill, "handleClickIconEye");
         const iconEye = screen.getAllByTestId("icon-eye")[0];
+        // iconEye.addEventListener("click", () => {
+        //   console.log("L'icône a été cliquée");
+        // });
         $.fn.modal = jest.fn();
-        userEvent.click(iconEye);
+        iconEye.click();
 
         expect(spy).toBeCalledTimes(1);
         expect($.fn.modal).toBeCalledWith("show");
