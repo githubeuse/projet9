@@ -43,7 +43,7 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted)
     })
     describe("When I click on the new note de frais button", () => {
-      test('Then handleClickNewBill calls onNavigate with correct path', () => {
+      test('Then handleClickNewBill is called', () => {
         Object.defineProperty(window, "localStorage", {
           value: localStorageMock,
         });
@@ -55,31 +55,16 @@ describe("Given I am connected as an employee", () => {
         document.body.append(root);
         router();
 
-        const onNavigate = (pathname) => {
-          document.body.innerHTML = ROUTES({ pathname });
-        };
-
-        window.onNavigate(ROUTES_PATH.Bills);
+        window.onNavigate(ROUTES_PATH.NewBill);
 
         const btnNewBill = screen.getByTestId("btn-new-bill");
-        // console.log(btnNewBill.outerHTML);
-
-        // try {
-        //   userEvent.click(btnNewBill);
-        //   console.log('Le bouton est cliquable');
-        // } catch (error) {
-        //   console.log('Le bouton n\'est pas cliquable', error);
-        // }
 
         const bill = new Bills({ document, onNavigate, store: null, localStorage });
-
-        // console.log(bill.handleClickNewBill); // Ajoutez cette ligne
-
 
         bill.handleClickNewBill = jest.fn(bill.handleClickNewBill);
         btnNewBill.addEventListener("click", bill.handleClickNewBill);
 
-        btnNewBill.click(btnNewBill);
+        btnNewBill.click();
         expect(bill.handleClickNewBill).toBeCalled();
       });
     })

@@ -47,9 +47,7 @@ export default ({ data: bills, loading, error }) => {
   } else if (error) {
     return ErrorPage(error)
   }
-  // if (!bills) {
-  //   console.log('bills is undefined before sort');
-  // } else {
+
   bills = bills || [];
   bills.sort((a, b) => ((a.date < b.date) ? 1 : -1));
   // }
