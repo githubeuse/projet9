@@ -116,7 +116,11 @@ describe("Given I am a user connected as Employee", () => {
       router();
       window.onNavigate(ROUTES_PATH.Bills);
 
-      await waitFor(() => screen.getByText("Mes notes de frais"));
+  
+      await waitFor(() => {
+        const textElement = screen.getByText("Mes notes de frais");
+        expect(textElement).toBeTruthy();
+      });
 
       const exempleTypeDeFacture = await screen.getByText("Transports");
       expect(exempleTypeDeFacture).toBeTruthy();
