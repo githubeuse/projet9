@@ -55,7 +55,7 @@ describe("Given I am connected as an employee", () => {
         document.body.append(root);
         router();
 
-        window.onNavigate(ROUTES_PATH.NewBill);
+        window.onNavigate(ROUTES_PATH.Bills);
 
         const btnNewBill = screen.getByTestId("btn-new-bill");
 
