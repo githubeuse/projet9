@@ -38,7 +38,6 @@ describe('Given I am connected', () => {
       })) // mise en place d'un utilisateur de type admin
       document.body.innerHTML = DashboardUI({ bills }) // mise en place de l'interface utilisateur
       const logout = new Logout({ document, onNavigate, localStorage }) // nouvelle instance de Logout => logout
-      // const handleClick = jest.fn(logout.handleClick) // mock de la méthode handleClick
       logout.handleClick = jest.fn();
 
       const disco = screen.getByTestId('layout-disconnect') // récupération de l'élément du bouton de déconnexion
