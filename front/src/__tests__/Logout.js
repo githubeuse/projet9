@@ -31,19 +31,20 @@ describe('Given I am connected', () => {
     test(('Then, I should be sent to login page'), () => {
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
-      }
-      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      } // mise en place du chemin de la page
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock }); // définition du local storage mocké
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Admin'
-      }))
-      document.body.innerHTML = DashboardUI({ bills })
-      const logout = new Logout({ document, onNavigate, localStorage })
-      const handleClick = jest.fn(logout.handleClick)
+      })) // mise en place d'un utilisateur de type admin
+      document.body.innerHTML = DashboardUI({ bills }) // mise en place de l'interface utilisateur
+      const logout = new Logout({ document, onNavigate, localStorage }) // nouvelle instance de Logout => logout
+      // const handleClick = jest.fn(logout.handleClick) // mock de la méthode handleClick
+      logout.handleClick = jest.fn();
 
-      const disco = screen.getByTestId('layout-disconnect')
-      disco.addEventListener('click', handleClick)
-      userEvent.click(disco)
-      expect(handleClick).toHaveBeenCalled()
+      const disco = screen.getByTestId('layout-disconnect') // récupération de l'élément du bouton de déconnexion
+      disco.addEventListener('click', logout.handleClick) // ajout d'un event listener sur le bouton de déconnexion
+      disco.click()// simulation d'un clic
+      expect(logout.handleClick).toHaveBeenCalled()
       expect(screen.getByText('Administration')).toBeTruthy()
     })
   })
