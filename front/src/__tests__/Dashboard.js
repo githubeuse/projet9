@@ -54,19 +54,20 @@ describe('Given I am connected as an Admin', () => {
 
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
-      }
+      } // mise en place du chemin
 
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       window.localStorage.setItem('user', JSON.stringify({
-        type: 'Admin'
-      }))
+        type: 'Admin' 
+      })) // mise en place d'un utilisateur de type admin
 
       const dashboard = new Dashboard({
         document, onNavigate, store: null, bills:bills, localStorage: window.localStorage
-      })
-      document.body.innerHTML = DashboardUI({ data: { bills } })
+      }) // création d'une instance de Dashboard avec les paramètres nécessaires
+      document.body.innerHTML = DashboardUI({ data: { bills } }) // mise en place de l'interface utilisateur
 
       const handleShowTickets1 = jest.fn((e) => dashboard.handleShowTickets(e, bills, 1))
+      // je mock dans handleShowTickets1, l'appel de la fonction dashboard.handleShowTickets avec les arguments e, bills, 1
       const handleShowTickets2 = jest.fn((e) => dashboard.handleShowTickets(e, bills, 2))
       const handleShowTickets3 = jest.fn((e) => dashboard.handleShowTickets(e, bills, 3))
 
@@ -75,18 +76,19 @@ describe('Given I am connected as an Admin', () => {
       const icon3 = screen.getByTestId('arrow-icon3')
 
       icon1.addEventListener('click', handleShowTickets1)
-      userEvent.click(icon1)
+      icon1.click();
       expect(handleShowTickets1).toHaveBeenCalled()
       await waitFor(() => screen.getByTestId(`open-bill47qAXb6fIm2zOKkLzMro`) )
       expect(screen.getByTestId(`open-bill47qAXb6fIm2zOKkLzMro`)).toBeTruthy()
+
       icon2.addEventListener('click', handleShowTickets2)
-      userEvent.click(icon2)
+      icon2.click();
       expect(handleShowTickets2).toHaveBeenCalled()
       await waitFor(() => screen.getByTestId(`open-billUIUZtnPQvnbFnB0ozvJh`) )
       expect(screen.getByTestId(`open-billUIUZtnPQvnbFnB0ozvJh`)).toBeTruthy()
 
       icon3.addEventListener('click', handleShowTickets3)
-      userEvent.click(icon3)
+      icon3.click();
       expect(handleShowTickets3).toHaveBeenCalled()
       await waitFor(() => screen.getByTestId(`open-billBeKy5Mo4jkmdfPGYpTxZ`) )
       expect(screen.getByTestId(`open-billBeKy5Mo4jkmdfPGYpTxZ`)).toBeTruthy()
@@ -98,25 +100,30 @@ describe('Given I am connected as an Admin', () => {
 
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
-      }
+      } // mise en place du chemin
 
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Admin'
-      }))
+      })) // mise en place d'un utilisateur de type admin
 
       const dashboard = new Dashboard({
         document, onNavigate, store: null, bills:bills, localStorage: window.localStorage
-      })
-      document.body.innerHTML = DashboardUI({ data: { bills } })
-      const handleShowTickets1 = jest.fn((e) => dashboard.handleShowTickets(e, bills, 1))
+      }) // création d'une instance de Dashboard avec les paramètres nécessaires
+
+      document.body.innerHTML = DashboardUI({ data: { bills } }) // mise en place de l'interface utilisateur
+
+      const handleShowTickets1 = jest.fn((e) => dashboard.handleShowTickets(e, bills, 1)) //mock de handleShowTickets avec les arg e, bills, 1 dans handleShowTickets1
       const icon1 = screen.getByTestId('arrow-icon1')
       icon1.addEventListener('click', handleShowTickets1)
-      userEvent.click(icon1)
+      icon1.click();
+      
       expect(handleShowTickets1).toHaveBeenCalled()
       expect(screen.getByTestId(`open-bill47qAXb6fIm2zOKkLzMro`)).toBeTruthy()
+    
       const iconEdit = screen.getByTestId('open-bill47qAXb6fIm2zOKkLzMro')
-      userEvent.click(iconEdit)
+      iconEdit.click();
+      // userEvent.click(iconEdit)
       expect(screen.getByTestId(`dashboard-form`)).toBeTruthy()
     })
   })
@@ -141,12 +148,12 @@ describe('Given I am connected as an Admin', () => {
       const handleShowTickets1 = jest.fn((e) => dashboard.handleShowTickets(e, bills, 1))
       const icon1 = screen.getByTestId('arrow-icon1')
       icon1.addEventListener('click', handleShowTickets1)
-      userEvent.click(icon1)
+      icon1.click();
       expect(handleShowTickets1).toHaveBeenCalled()
       expect(screen.getByTestId(`open-bill47qAXb6fIm2zOKkLzMro`)).toBeTruthy()
       const iconEdit = screen.getByTestId('open-bill47qAXb6fIm2zOKkLzMro')
-      userEvent.click(iconEdit)
-      userEvent.click(iconEdit)
+      iconEdit.click();
+      iconEdit.click();
       const bigBilledIcon = screen.queryByTestId("big-billed-icon")
       expect(bigBilledIcon).toBeTruthy()
     })
@@ -233,7 +240,7 @@ describe('Given I am connected as Admin and I am on Dashboard page and I clicked
       const handleClickIconEye = jest.fn(dashboard.handleClickIconEye)
       const eye = screen.getByTestId('icon-eye-d')
       eye.addEventListener('click', handleClickIconEye)
-      userEvent.click(eye)
+      eye.click();
       expect(handleClickIconEye).toHaveBeenCalled()
 
       const modale = screen.getByTestId('modaleFileAdmin')
